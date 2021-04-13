@@ -1,0 +1,9 @@
+<html>
+    <head>
+    </head>
+<body>
+    <h1>Building...</h1>
+    <p>If you are seeing this page, either your demo is still building or something failed.</p>
+    <p>You can check the state of your build <a href="$BUILD_URL">here</a>.</p>
+</body>
+</html>
