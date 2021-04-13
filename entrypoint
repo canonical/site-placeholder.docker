@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+envsubst < "index.template" > "index.html"
+nginx -g 'daemon off;'

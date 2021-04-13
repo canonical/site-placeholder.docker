@@ -1,12 +1,13 @@
 FROM ubuntu:focal
 
-RUN apt-get update && apt-get install --yes nginx
+RUN apt-get update && apt-get install --yes gettext-base nginx
 
 # Copy over files
 WORKDIR /srv
-ADD index.html index.html
+ADD entrypoint entrypoint
+ADD index.template index.template
 ADD nginx.conf /etc/nginx/sites-enabled/default
 
 STOPSIGNAL SIGTERM
 
-CMD ["nginx", "-g", "daemon off;"]
+ENTRYPOINT ["./entrypoint"]
