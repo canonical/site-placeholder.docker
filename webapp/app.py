@@ -8,7 +8,7 @@ from webapp.jenkins import Jenkins
 app = create_app()
 
 
-@app.route("/_status")
+@app.route("/_status/check")
 def status():
     return "OK"
 
