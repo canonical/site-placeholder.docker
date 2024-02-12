@@ -1,0 +1,92 @@
+<!doctype html>
+
+<head>
+    <title>{{ demo_name }}</title>
+    <link rel="stylesheet" href="static/css/vanilla-framework-version-4.7.0.min.css" />
+    <style>
+        .logs {
+            max-height: 900px;
+            overflow: auto;
+        }
+    </style>
+    <script src="static/js/main.js"></script>
+</head>
+
+<body>
+    <div class="row">
+        <div class="p-breadcrumbs" aria-label="Breadcrumbs">
+            <ol class="p-breadcrumbs__items p-text--small-caps">
+                <li class="p-breadcrumbs__item "><a href="https://webteam.canonical.com">Webteam</a></li>
+                <li class="p-breadcrumbs__item ">Demo Service</li>
+            </ol>
+        </div>
+        <hr class="p-rule">
+    </div>
+    <div class="row">
+        <div class="col-6 col-medium-3">
+            <div class="p-strip">
+                <h2 class="p-heading--2">Building</h2>
+                <h2 class="p-heading--4">{{ demo_name }}</h2>
+                <p>
+                    Your <a href="{{ build_url }}">build</a> is still in progress.
+                </p>
+                <p>
+                    This page will automatically
+                    refresh when the build is complete. You can view the build status, or check the logs for
+                    more
+                    information.
+                </p>
+            </div>
+            <div class="p-chip">
+                <a href="{{ gh_url }}">
+                    <img height="32" width="32" src="static/images/gh.png" alt="{{ demo_name }}" />
+                </a>
+            </div>
+            <div class="p-chip">
+                <a href="{{ build_url }}">
+                    <img height="32" width="32" src="static/images/jenkins.png" alt="{{ demo_name }}" />
+                </a>
+            </div>
+        </div>
+        <div class="col-6 col-medium-3">
+            <div class="p-strip">
+                <table aria-label="Vanilla framework table example">
+                    <thead>
+                        <tr>
+                            <th>Start time</th>
+                            <th>Jenkins Job Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th>{{ start_time }}</th>
+                            <td>{{ job_status }}</td>
+                            <td>
+                                <button id="restart-button" class="p-button--positive js-processing-button"
+                                    data-building="{{ is_building }}">
+                                    <i class="p-icon--spinner u-animation--spin is-light u-hide"></i>
+                                    <span id="button-label">Restart Deployment</span>
+                                </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                    </tfoot>
+                </table>
+                <div id="code-box" class="p-code-snippet">
+                    <div class="p-code-snippet__header">
+                        <h5 class="p-code-snippet__title">{{ demo_name }} Jenkins logs</h5>
+                    </div>
+                    <pre class="p-code-snippet__block" style="max-height: 300px;">
+<code>
+{{ logs }}
+</code>
+                    </pre>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

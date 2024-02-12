@@ -1,4 +1,11 @@
-#!/usr/bin/env bash
+#! /usr/bin/env bash
 
-envsubst < "index.template" > "index.html"
-nginx -g 'daemon off;'
+set -e
+
+RUN_COMMAND="gunicorn webapp.app:app --bind $1 --workers 1 --name talisker-`hostname`"
+
+if [ "${FLASK_DEBUG}" = true ] || [ "${FLASK_DEBUG}" = 1 ]; then
+    RUN_COMMAND="${RUN_COMMAND} --reload --log-level debug --timeout 9999"
+fi
+
+${RUN_COMMAND}

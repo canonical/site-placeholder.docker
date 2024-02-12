@@ -1,13 +1,13 @@
-FROM ubuntu:focal
+FROM ubuntu:jammy
 
-RUN apt-get update && apt-get install --yes gettext-base nginx
-
-# Copy over files
 WORKDIR /srv
-ADD entrypoint entrypoint
-ADD index.template index.template
-ADD nginx.conf /etc/nginx/sites-enabled/default
+ADD . .
 
-STOPSIGNAL SIGTERM
+# Build the image
+# ===
+RUN apt-get update && apt-get install --no-install-recommends --yes python3-pip
+RUN pip3 install -r requirements.txt
 
-ENTRYPOINT ["./entrypoint"]
+# Set revision ID
+ARG BUILD_ID
+ENV TALISKER_REVISION_ID "${BUILD_ID}"

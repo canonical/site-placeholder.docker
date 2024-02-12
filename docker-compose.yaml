@@ -1,0 +1,12 @@
+version: '3.8'
+services:
+  web:
+    build: .
+    entrypoint: /srv/entrypoint 0.0.0.0:80
+    environment:
+      BUILD_URL: "${BUILD_URL}"
+      FLASK_DEBUG: "${FLASK_DEBUG}"
+    ports:
+    - "${PORT}:5000"
+    volumes:
+    - .:/srv
