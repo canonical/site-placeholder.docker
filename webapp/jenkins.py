@@ -8,12 +8,12 @@ class Jenkins:
         self.info = self.__get_job_info__(jenkins_job_url)
 
     def __get_job_info__(self, url):
-        url = f"{url}/api/python"
+        url = f"{url}api/python"
         response = requests.get(url)
         return ast.literal_eval(response.text)
 
     def get_job_logs(self):
-        url = f"{self.jenkins_job_url}/consoleText"
+        url = f"{self.jenkins_job_url}consoleText"
         response = requests.get(url)
         return ast.literal_eval(response.text)
 

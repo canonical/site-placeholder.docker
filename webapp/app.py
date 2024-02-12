@@ -15,7 +15,11 @@ def status():
 
 @app.route("/")
 def index():
-    jenkins = Jenkins(app.config["BUILD_URL"])
+
+    JENKINS_URL = app.config["JENKINS_URL"]
+    job_path = app.config["BUILD_URL"].split(".com")[1]
+    jenkins = Jenkins(f"http://{JENKINS_URL}{job_path}")
+    
     start_time = datetime.fromtimestamp(jenkins.info["timestamp"] / 1000)
     build_url = jenkins.info["url"]
     job_status = jenkins.info["result"]
