@@ -16,6 +16,3 @@ class Jenkins:
         url = f"{self.jenkins_job_url}consoleText"
         response = requests.get(url)
         return ast.literal_eval(response.text)
-
-    def __get_build_info__(self, job_name):
-        f"https://{self.jenkins_api_url}/webteam/job/{job_name}/api/json?tree=builds[number,result,duration,url,actions[parameters[name,value]]]    "
