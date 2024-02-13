@@ -28,6 +28,6 @@ class Jenkins:
         return f"{domain}-{pr_no}.demos.haus"
 
     def get_start_time(self):
-        return datetime.fromtimestamp(jenkins.info["timestamp"] / 1000).strftime(
+        return datetime.fromtimestamp(self.info["timestamp"] / 1000).strftime(
             "%Y-%m-%d %H:%M:%S"
         )
