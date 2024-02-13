@@ -27,6 +27,9 @@ class Jenkins:
         domain = domain.replace(".", "-")
         return f"{domain}-{pr_no}.demos.haus"
 
+    def get_pr_info(self):
+        return self.info["actions"][0]["parameters"][0]["value"]
+
     def get_start_time(self):
         return datetime.fromtimestamp(self.info["timestamp"] / 1000).strftime(
             "%Y-%m-%d %H:%M:%S"
