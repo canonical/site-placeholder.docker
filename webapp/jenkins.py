@@ -1,6 +1,6 @@
 import ast
 import requests
-import datetime
+from datetime import datetime
 
 
 class Jenkins:
