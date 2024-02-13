@@ -15,21 +15,15 @@ def status():
 
 @app.route("/")
 def index():
+    jenkins = Jenkins(app=app)
 
-    JENKINS_URL = app.config["JENKINS_URL"]
-    job_path = app.config["BUILD_URL"].split(".com")[1]
-    jenkins = Jenkins(f"http://{JENKINS_URL}{job_path}")
-    
-    start_time = datetime.fromtimestamp(jenkins.info["timestamp"] / 1000)
+    # Get the job details
     build_url = jenkins.info["url"]
     job_status = jenkins.info["result"]
     is_building = jenkins.info["inProgress"]
-    gh_url = jenkins.info["actions"][0]["parameters"][0]["value"]
-    domain, pr_no = "https://github.com/canonical/ubuntu.com/pull/13570".split(
-        "canonical/"
-    )[1].split("/pull/")
-    domain = domain.replace(".", "-")
-    demo_name = f"{domain}-{pr_no}.demos.haus"
+
+    demo_name = jenkins.get_demo_name()
+    start_time = jenkins.get_start_time()
     logs = jenkins.get_job_logs()
 
     return render_template(
@@ -40,5 +34,5 @@ def index():
         is_building=is_building,
         job_status=job_status,
         logs=logs,
-        start_time=start_time.strftime("%Y-%m-%d %H:%M:%S"),
+        start_time=start_time,
     )
