@@ -6,10 +6,11 @@ from datetime import datetime
 class Jenkins:
 
     def __init__(self, app=None):
-        JENKINS_URL = app.config["JENKINS_URL"]
-        self.app = app
-        self.job_path = app.config["BUILD_URL"].split(".com")[1]
-        self.jenkins_job_url = f"http://{JENKINS_URL}{self.job_path}"
+        self.jenkins_url = app.config.get("JENKINS_URL") or "localhost"
+        self.jenkins_token = app.config.get("JENKINS_TOKEN")
+        self.job_path = app.config.get("BUILD_URL").split(".com")[1]
+        self.jenkins_job_url = f"http://{self.jenkins_url}{self.job_path}"
+        self.gh_url = self.get_pr_info()
         self.info = self.__get_job_info__()
 
     def __get_job_info__(self):
@@ -23,13 +24,17 @@ class Jenkins:
         return response.text
 
     def get_demo_name(self):
-        gh_url = self.info["actions"][0]["parameters"][0]["value"]
-        domain, pr_no = gh_url.split("canonical/")[1].split("/pull/")
+        domain, pr_no = self.gh_url.split("canonical/")[1].split("/pull/")
         domain = domain.replace(".", "-")
         return f"{domain}-{pr_no}.demos.haus"
 
     def get_pr_info(self):
-        return self.info["actions"][0]["parameters"][0]["value"]
+        for action in self.info["actions"]:
+            if "parameters" in action:
+                for param in action["parameters"]:
+                    if "PR_URL" in param["name"]:
+                        return param["value"]
+        return "No PR URL found"
 
     def get_start_time(self):
         return datetime.fromtimestamp(self.info["timestamp"] / 1000).strftime(
@@ -37,12 +42,11 @@ class Jenkins:
         )
 
     def restart_build(self):
-        JENKINS_URL = self.app.config["JENKINS_URL"]
         requests.post(
-            f"http://{JENKINS_URL}/webteam/start-demo/buildWithParameters",
+            f"http://{self.jenkins_url}/webteam/start-demo/buildWithParameters",
             data={
-                "PR_URL": self.get_pr_info(),
-                "token": self.app.config["JENKINS_TOKEN"],
+                "PR_URL": self.gh_url,
+                "token": self.jenkins_token,
             },
         )
         return "OK"
