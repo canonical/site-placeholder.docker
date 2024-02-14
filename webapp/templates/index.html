@@ -63,7 +63,7 @@
                             <th>{{ start_time }}</th>
                             <td>{{ job_status }}</td>
                             <td>
-                                <button id="restart-button" class="p-button--positive js-processing-button"
+                                <button id="restart-button" onclick="submitRestartRequest()" class="p-button--positive js-processing-button"
                                     data-building="{{ is_building }}">
                                     <i class="p-icon--spinner u-animation--spin is-light u-hide"></i>
                                     <span id="button-label">Restart Deployment</span>
