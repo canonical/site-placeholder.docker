@@ -16,7 +16,7 @@ class Jenkins:
         url = f"{self.jenkins_job_url}api/python"
         response = requests.get(url)
         info = ast.literal_eval(response.text)
-        self.info["gh_url"] = self.__get_pr_info__(info)
+        info["gh_url"] = self.__get_pr_info__(info)
         return info
 
     def __get_pr_info__(self, info):
