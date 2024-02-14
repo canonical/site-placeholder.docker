@@ -39,7 +39,7 @@ class Jenkins:
     def restart_build(self):
         JENKINS_URL = self.app.config["JENKINS_URL"]
         requests.post(
-            f"{JENKINS_URL}/webteam/start-demo/buildWithParameters",
+            f"http://{JENKINS_URL}/webteam/start-demo/buildWithParameters",
             data={
                 "PR_URL": self.get_pr_info(),
                 "token": self.app.config["JENKINS_TOKEN"],
