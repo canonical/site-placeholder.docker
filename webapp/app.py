@@ -21,11 +21,11 @@ def index():
     build_url = jenkins.info["url"]
     job_status = jenkins.info["result"]
     is_building = jenkins.info["inProgress"]
+    gh_url = jenkins.info["gh_url"]
 
     demo_name = jenkins.get_demo_name()
     start_time = jenkins.get_start_time()
     logs = jenkins.get_job_logs()
-    gh_url = jenkins.get_pr_info()
 
     return render_template(
         "index.html",

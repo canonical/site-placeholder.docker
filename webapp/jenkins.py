@@ -16,7 +16,7 @@ class Jenkins:
         url = f"{self.jenkins_job_url}api/python"
         response = requests.get(url)
         info = ast.literal_eval(response.text)
-        self.gh_url = self.__get_pr_info__(info)
+        self.info["gh_url"] = self.__get_pr_info__(info)
         return info
 
     def __get_pr_info__(self, info):
@@ -33,7 +33,7 @@ class Jenkins:
         return response.text
 
     def get_demo_name(self):
-        domain, pr_no = self.gh_url.split("canonical/")[1].split("/pull/")
+        domain, pr_no = self.info["gh_url"].split("canonical/")[1].split("/pull/")
         domain = domain.replace(".", "-")
         return f"{domain}-{pr_no}.demos.haus"
 
@@ -46,7 +46,7 @@ class Jenkins:
         requests.post(
             f"http://{self.jenkins_url}/webteam/start-demo/buildWithParameters",
             data={
-                "PR_URL": self.gh_url,
+                "PR_URL": self.info["gh_url"],
                 "token": self.jenkins_token,
             },
         )
