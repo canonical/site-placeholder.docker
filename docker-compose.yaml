@@ -5,6 +5,7 @@ services:
     entrypoint: /srv/entrypoint 0.0.0.0:80
     environment:
       BUILD_URL: "${BUILD_URL}"
+      JENKINS_TOKEN: "${JENKINS_TOKEN}"
       FLASK_DEBUG: "${FLASK_DEBUG}"
     ports:
     - "${PORT}:80"

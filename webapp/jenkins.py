@@ -34,3 +34,11 @@ class Jenkins:
         return datetime.fromtimestamp(self.info["timestamp"] / 1000).strftime(
             "%Y-%m-%d %H:%M:%S"
         )
+
+    def restart_build(self):
+        JENKINS_URL = app.config["JENKINS_URL"]
+        requests.post(f"{JENKINS_URL}/webteam/start-demo/buildWithParameters", data={
+            'PR_URL': self.get_pr_info(),
+            'token': app.config["JENKINS_TOKEN"]
+        })
+        return "OK"

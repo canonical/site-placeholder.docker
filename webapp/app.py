@@ -37,3 +37,11 @@ def index():
         logs=logs,
         gh_url=gh_url,
     )
+
+
+@app.route("/restart-build")
+def build():
+    jenkins = Jenkins(app=app)
+    jenkins.restart_build()
+
+    return "OK"
