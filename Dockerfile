@@ -1,4 +1,4 @@
-FROM ubuntu:focal
+FROM ubuntu:resolute
 
 RUN apt-get update && apt-get install --yes nginx
 
